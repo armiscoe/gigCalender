@@ -4,11 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+  
+
   <title>Gigs</title>
 </head>
 <body>
-    <%- include('../partials/header') %>
+    
+    <ul class="right">
+        <li>
+        <% if (user) { %>
+          <a href="/logout"><i class="material-icons left">trending_flat</i>Log Out</a>
+        <% } else { %>
+          <a href="/auth/google"><i class="material-icons left">vpn_key</i>Login with Google</a>
+        <% } %>
+        </li>
+      </ul>
+    
+
+ 
     <table class="all">
         <thead>
           <tr>
@@ -17,6 +31,7 @@
             <th scope="col">Instrument</th>
             <th scope="col">City</th>
             <th scope="col">Date</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -30,16 +45,22 @@
             <td><%= gig.instrument %></td>
             <td><%= gig.city %></td>
             <td><%= gig.date %></td>
+            <td><form action="/gigs/<%= gig._id %>?_method=DELETE" 
+            method="POST" > 
+            <button type="submit">X</button></form>
+            </td>
             <td>
-              <a class="btn btn-dark" href="/gigs/<%= gig._id %>">DETAILS</a>
+              <a href="/gigs/<%= gig._id %>">DETAILS</a>
             </td>
           </tr>
           <% }); %>
         </tbody>
       </table>
+
+      <a href="/gigs/new">ADD GIG</a>
+
       
   
 </body>
-
 <%- include('../partials/footer') %>
 </html>

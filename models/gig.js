@@ -20,7 +20,11 @@ var gigSchema = new Schema ({
         default: function () {
             return new Date().getFullYear();
         }
-    }
+    },
+    songs: [{type: Schema.Types.ObjectId, ref: 'songs'}],
+    
+    googleId: String
+
 });
 
 module.exports = mongoose.model('Gig', gigSchema);

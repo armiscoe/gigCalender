@@ -6,14 +6,21 @@ module.exports = {
     new: newGig,
     create,
     show
+  
 }
 
 function index(req, res) {
     Gig.find({})
         .sort({ date: 'asc' })
         .exec(function(err, gigs) {
-            res.render('gigs/index', { title: 'All Gigs', gigs });
+            res.render('gigs/index', {
+                 gigs,
+                 user: req.user,
+                 name: req.name
+
+             });
         });
+
 }
 
 function newGig(req, res) {
@@ -32,15 +39,10 @@ function create(req, res) {
 }
 
 function show(req, res) {
-    Gig.findById(req.params.id)
-    .populate('song').exec(function(err, gig) {
-      // Performer.find({}).where('_id').nin(movie.cast)
-      Setlist.find({_id: {$nin: gig.song}})
-      .exec(function(err, setlist) {
-        console.log(setlist);
+    Gig.findById(req.params.id, function(err, gig) {
         res.render('gigs/show', {
-          title: 'Gig Detail', gig, setlist
+          user: req.user,
+          gig
         });
       });
-    });
-  }
+    }
