@@ -1,39 +1,53 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-var Gig = require('../models/gig');
+var User = require('../Users/Model');
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK
   },
-    function(accessToken, refreshToken, profile, cb) {
-        Gig.findOne({ 'googleId': profile.id }, function(err, student) {
-          if (err) return cb(err);
-          if (gig) {
-            return cb(null, gig);
-          } else {
-            // we have a new gig via OAuth!
-            var newGig = new Gig({
-              name: profile.displayName,
-              email: profile.emails[0].value,
-              googleId: profile.id
-            });
-            newGig.save(function(err) {
-              if (err) return cb(err);
-              return cb(null, newGig);
-            });
-          }
-        });
+  (accessToken, refreshToken, profile, cb) => {
+    // a user has logged in with OAuth...
+    //look to see if we have a user that matches the profile.id
+    User.findOne({ googleId: profile.id }, (error, user) => {
+      //if there is an error execute callback with error
+      if (error) return cb(error)
+      //if mongoose returns a user set the error to null and execute the callback with the     returned User
+      if (user) {
+        return cb(null, user)
+      } else {
+        // we have a new User via OAuth!
+        const newUser = new User({
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          googleId: profile.id
+        })
+        //save the new user if there is no errors
+        newUser
+          .save()
+          //execute the callback with the new User
+          .then(newUser => {
+            console.log('newUser', newUser)
+            cb(null, newUser)
+          })
+          .catch(error => {
+            console.log(error)
+            cb(error)
+          })
       }
-    ));
+    })
+  
+  }));
+    
+    
 
- passport.serializeUser(function(gig, done) {
-     done(null, gig.id);
+ passport.serializeUser(function(user, done) {
+     done(null, user.id);
  });
 
  passport.deserializeUser(function(id, done) {
-    Gig.findById(id, function(err, gig) {
-      done(err, gig);
+    User.findById(id, function(err, user) {
+      done(err, user);
     });
   });

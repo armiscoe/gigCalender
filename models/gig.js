@@ -1,6 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var setlistSchema = new Schema ({
+    songs: {
+    type: Array
+}});
+
 var gigSchema = new Schema ({
     venue: {
         type: String
@@ -21,9 +26,8 @@ var gigSchema = new Schema ({
             return new Date().getFullYear();
         }
     },
-    songs: [{type: Schema.Types.ObjectId, ref: 'songs'}],
+    setlist: [setlistSchema]
     
-    googleId: String
 
 });
 

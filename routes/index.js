@@ -6,6 +6,12 @@ router.get('/', function(req, res) {
   res.redirect('/gigs');
 });
 
+router.get('/home', (req, res, next) => {
+  console.log('the user is : ', req.user)
+  console.log('the session lookls like this : ', req.session)
+  res.send('<h1>Welcome back to the party!</h1>')
+})
+
 router.get('/auth/google', passport.authenticate(
   'google',
   { scope: ['profile', 'email'] }

@@ -1,11 +1,11 @@
 var Gig = require('../models/gig');
-var Setlist = require('../models/setlist');
+
 
 module.exports = {
     index,
     new: newGig,
     create,
-    show
+    show,
   
 }
 
@@ -46,3 +46,4 @@ function show(req, res) {
         });
       });
     }
+
