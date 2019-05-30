@@ -3,25 +3,23 @@ var Schema = mongoose.Schema;
 
 var gigSchema = new Schema ({
     venue: {
-        type: String,
+        type: String
+    },
+    band: {
+        type: String
     },
     instrument: {
         type: String,
         enum: ['Keys', 'Bass', 'Guitar']
     },
     city: {
-        type: String,
+        type: String
     },
     date: {
         type: Date,
         default: function () {
             return new Date().getFullYear();
         }
-    },
-    genre: {
-        type: String,
-        enum: ['Country', 'Rock', 'Blues', 'Soul', 'Funk', 'Jazz']
-
     }
 });
 

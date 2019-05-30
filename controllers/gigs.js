@@ -32,12 +32,14 @@ function create(req, res) {
 }
 
 function show(req, res) {
-    Gig.findById(req.params.id).exec(function(err, gig) {
-      Setlist.find({ gigs: gigs._id }, function(err, gigs) {
+    Gig.findById(req.params.id)
+    .populate('song').exec(function(err, gig) {
+      // Performer.find({}).where('_id').nin(movie.cast)
+      Setlist.find({_id: {$nin: gig.song}})
+      .exec(function(err, setlist) {
+        console.log(setlist);
         res.render('gigs/show', {
-          title: 'Gig Details',
-          gig,
-          gigs
+          title: 'Gig Detail', gig, setlist
         });
       });
     });

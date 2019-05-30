@@ -1,11 +1,10 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/gigs',
-     {useNewUrlParser: true}
-);
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
-var db = mongoose.connection;
+// database connection event
+mongoose.connection.on('connected', function () {
+  console.log(`Mongoose connected to: ${process.env.DATABASE_URL}`);
+});
 
-db.on('connected', function() {
-        console.log(`Connected to MongoDB at ${db.host}:${db.port}`);
-})
+module.exports = mongoose;

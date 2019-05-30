@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
-  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+  <title>Gigs</title>
 </head>
 <body>
-    
+    <%- include('../partials/header') %>
     <table class="all">
         <thead>
           <tr>
             <th scope="col">Venue</th>
+            <th scope="col">Band</th>
             <th scope="col">Instrument</th>
             <th scope="col">City</th>
-            <th scope="col">Genre</th>
             <th scope="col">Date</th>
           </tr>
         </thead>
@@ -26,9 +26,9 @@
             <th scope="row">
               <%= gig.venue %>
             </th>
+            <td><%= gig.band %></td>
             <td><%= gig.instrument %></td>
             <td><%= gig.city %></td>
-            <td><%= gig.genre %></td>
             <td><%= gig.date %></td>
             <td>
               <a class="btn btn-dark" href="/gigs/<%= gig._id %>">DETAILS</a>
@@ -40,4 +40,6 @@
       
   
 </body>
+
+<%- include('../partials/footer') %>
 </html>
