@@ -7,7 +7,8 @@ router.get('/', gigsCtrl.index);
 router.get('/new', gigsCtrl.new);
 router.get('/:id', gigsCtrl.show);
 router.post('/', gigsCtrl.create);
-
+router.post('/:id/setlists', gigsCtrl.create);
+router.delete('/:id', gigsCtrl.gDelete);
 
 function isLoggedIn(req, res, next) {
     if ( req.isAuthenticated() ) return next();

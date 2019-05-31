@@ -2,9 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var setlistSchema = new Schema ({
-    songs: {
-    type: Array
-}});
+    song: {type: String, required: true},
+    artist: {type: String},
+    keySignature: {type: String,
+                   enum: ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B']  
+                                    
+    }})
 
 var gigSchema = new Schema ({
     venue: {

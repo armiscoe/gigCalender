@@ -6,6 +6,7 @@ module.exports = {
     new: newGig,
     create,
     show,
+    gDelete
   
 }
 
@@ -27,6 +28,15 @@ function newGig(req, res) {
     res.render('gigs/new');
 }
 
+function gDelete(req, res) {
+    console.log('hello');
+    Gig.findByIdAndDelete(req.params.id, function(err, gig) {
+          gig.save(function(err) {
+            res.redirect('/gigs');
+        });
+    });
+}
+
 function create(req, res) {
     var gig = new Gig(req.body);
     gig.save(function(err) {
@@ -46,4 +56,6 @@ function show(req, res) {
         });
       });
     }
-
+function addSetlist(req, res) {
+    
+}
